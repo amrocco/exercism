@@ -1,26 +1,20 @@
 package pangram
 
-import "regexp"
 import "strings"
 
 const testVersion = 1
+const alpha = "abcdefghijklmnopqrstuvwxyz"
 
 //IsPangram determines if a string is a pangram or not
 func IsPangram(sentence string) bool {
 	letters := make(map[rune]bool)
-	regex := regexp.MustCompile("[^a-zA-Z]+")
-
 	sentence = strings.ToLower(sentence)
-	sentence = regex.ReplaceAllString(sentence, "")
 
-	for _, letter := range sentence {
-		letters[letter] = true
+	for _, char := range sentence {
+		if strings.Contains(alpha, string(char)) {
+			letters[char] = true
+		}
 	}
 
-	if len(letters) == 26 {
-		return true
-
-	}
-
-	return false
+	return len(letters) == 26
 }
